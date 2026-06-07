@@ -46,6 +46,11 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
 .field{overflow:hidden;}
 .field input:focus{border-color:var(--pink);}
 .sbtn{width:100%;padding:11px;background:var(--pink-m);color:white;border:none;border-radius:var(--rs);font-size:15px;font-weight:800;cursor:pointer;font-family:'Nunito','Noto Sans JP',sans-serif;letter-spacing:0.05em;}
+.calc-disp{background:var(--bg);border:2px solid var(--hint);border-radius:var(--rs);padding:9px 14px;text-align:right;font-size:22px;font-weight:800;color:var(--text);margin-bottom:8px;}
+.calc-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:10px;}
+.cpb{padding:9px 0;border-radius:var(--rs);border:2px solid var(--hint);background:var(--bg);font-size:18px;font-weight:800;font-family:'Nunito',sans-serif;color:var(--text);cursor:pointer;}
+.cpb.del{color:var(--pink-d);background:var(--pink-l);border-color:var(--pink);}
+.cpb.clr{color:var(--muted);font-size:14px;}
 
 .today-card{background:var(--surface);border-radius:var(--r);padding:0.85rem;border:2px solid var(--pink-l);}
 .today-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
@@ -116,7 +121,21 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
 
     <div class="fcard">
       <div class="field"><input type="date" id="f-date"></div>
-      <div class="field"><input type="number" id="f-amt" placeholder="金額 (例: 1200)" inputmode="numeric"></div>
+      <div class="calc-disp" id="calc-disp">¥0</div>
+      <div class="calc-pad">
+        <button class="cpb" onclick="calcIn('7')">7</button>
+        <button class="cpb" onclick="calcIn('8')">8</button>
+        <button class="cpb" onclick="calcIn('9')">9</button>
+        <button class="cpb" onclick="calcIn('4')">4</button>
+        <button class="cpb" onclick="calcIn('5')">5</button>
+        <button class="cpb" onclick="calcIn('6')">6</button>
+        <button class="cpb" onclick="calcIn('1')">1</button>
+        <button class="cpb" onclick="calcIn('2')">2</button>
+        <button class="cpb" onclick="calcIn('3')">3</button>
+        <button class="cpb clr" onclick="calcClr()">クリア</button>
+        <button class="cpb" onclick="calcIn('0')">0</button>
+        <button class="cpb del" onclick="calcDel()">⌫</button>
+      </div>
       <div class="cat-grid" id="cat-btns">
         <button class="cat-btn on" data-cat="外食" onclick="selectCat(this,'cat-btns')">
           <img src="cat_gaishoku.jpg" alt="外食"><span>外食</span>
@@ -214,6 +233,11 @@ const CAT_IMG={'外食':'cat_gaishoku.jpg','コンビニ':'cat_conveni.png','ス
 const KEY='kakeibo_v4';
 let entries=[];
 let delId=null, selDate=null;
+let calcVal='';
+function calcIn(n){if(calcVal.length>=7)return;calcVal+=n;updCalc();}
+function calcDel(){calcVal=calcVal.slice(0,-1);updCalc();}
+function calcClr(){calcVal='';updCalc();}
+function updCalc(){const v=parseInt(calcVal)||0;document.getElementById('calc-disp').textContent=v?'¥'+v.toLocaleString('ja-JP'):'¥0';}
 let calY, calM;
 const now=new Date();
 const todayStr=now.toISOString().slice(0,10);
@@ -245,7 +269,7 @@ function getSelectedCat(gridId){
 }
 
 function saveEntry(){
-  const amt=parseInt(document.getElementById('f-amt').value);
+  const amt=parseInt(calcVal)||0;
   if(!amt||amt<=0){toast('金額を入力してね');return;}
   const date=document.getElementById('f-date').value;
   if(!date){toast('日付を選んでね');return;}
@@ -253,7 +277,7 @@ function saveEntry(){
   const memo=document.getElementById('f-memo').value.trim();
   entries.push({id:Date.now(),type:'expense',amount:amt,date,cat,memo});
   save();
-  document.getElementById('f-amt').value='';
+  calcVal='';updCalc();
   document.getElementById('f-memo').value='';
   toast('保存したよ 🌸');
   renderToday();
