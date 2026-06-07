@@ -62,6 +62,15 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
 .status-face{font-size:22px;margin-bottom:2px;transition:color 0.5s;letter-spacing:0.05em;}
 .status-msg{font-size:12px;font-weight:800;margin-bottom:2px;transition:color 0.5s;}
 .status-sub{font-size:10px;color:var(--muted);font-weight:600;}
+.memo-btn{width:100%;padding:6px 12px;border:2px solid var(--hint);border-radius:var(--rs);background:var(--bg);display:flex;align-items:center;justify-content:space-between;cursor:pointer;touch-action:manipulation;margin-bottom:5px;}
+.memo-btn .mv{font-size:14px;font-weight:600;color:#ddc8dd;}
+.memo-btn .mv.filled{color:var(--text);}
+.memo-btn .ma{font-size:13px;color:var(--muted);}
+.memo-sheet .modal{padding:1.2rem 1rem calc(1.2rem + env(safe-area-inset-bottom));}
+.memo-cur{font-size:13px;font-weight:700;color:var(--pink-d);text-align:center;padding:7px;background:var(--pink-l);border-radius:var(--rs);margin-bottom:12px;min-height:34px;display:flex;align-items:center;justify-content:center;}
+.memo-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px;}
+.mtag{padding:7px 13px;border-radius:99px;border:2px solid var(--hint);background:var(--bg);font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;font-family:'Nunito','Noto Sans JP',sans-serif;touch-action:manipulation;}
+.mtag.on{border-color:var(--pink-m);background:var(--pink-l);color:var(--pink-d);}
 
 .today-card{background:var(--surface);border-radius:var(--r);padding:0.65rem;border:2px solid var(--pink-l);}
 .today-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
@@ -155,6 +164,9 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
           <img src="cat_kousai.jpg" alt="交際費"><span>交際費</span>
         </button>
       </div>
+      <button class="memo-btn" onclick="openMemoSheet()">
+        <span class="mv" id="memo-val">メモ</span><span class="ma">›</span>
+      </button>
       <button class="sbtn" onclick="saveEntry()">ほぞん</button>
     </div>
 
@@ -225,6 +237,28 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
 
 <input type="file" id="imp" accept=".json" style="display:none" onchange="importData(event)">
 <div class="toast" id="toast"></div>
+<div class="mover memo-sheet" id="memo-sheet">
+  <div class="modal">
+    <div class="memo-cur" id="memo-cur">（未選択）</div>
+    <div class="memo-tags">
+      <button class="mtag" onclick="selectMemoTag(this)">ランチ</button>
+      <button class="mtag" onclick="selectMemoTag(this)">ディナー</button>
+      <button class="mtag" onclick="selectMemoTag(this)">朝食</button>
+      <button class="mtag" onclick="selectMemoTag(this)">カフェ</button>
+      <button class="mtag" onclick="selectMemoTag(this)">飲み会</button>
+      <button class="mtag" onclick="selectMemoTag(this)">おやつ</button>
+      <button class="mtag" onclick="selectMemoTag(this)">弁当</button>
+      <button class="mtag" onclick="selectMemoTag(this)">テイクアウト</button>
+      <button class="mtag" onclick="selectMemoTag(this)">コーヒー</button>
+      <button class="mtag" onclick="selectMemoTag(this)">スイーツ</button>
+      <button class="mtag" onclick="selectMemoTag(this)">宅配</button>
+    </div>
+    <div class="mbtns">
+      <button class="mbtn cancel" onclick="closeMemoSheet()">キャンセル</button>
+      <button class="mbtn danger" onclick="confirmMemoSheet()">完了</button>
+    </div>
+  </div>
+</div>
 <div class="mover" id="dmod">
   <div class="modal">
     <h3>削除しますか？</h3>
@@ -246,6 +280,27 @@ function calcIn(n){if(calcVal.length>=7)return;calcVal+=n;updCalc();}
 function calcDel(){calcVal=calcVal.slice(0,-1);updCalc();}
 function calcClr(){calcVal='';updCalc();}
 function updCalc(){const v=parseInt(calcVal)||0;document.getElementById('calc-disp').textContent=v?'¥'+v.toLocaleString('ja-JP'):'¥0';}
+
+let memoVal='';
+function openMemoSheet(){
+  document.querySelectorAll('.mtag').forEach(t=>t.classList.toggle('on',t.textContent===memoVal));
+  document.getElementById('memo-cur').textContent=memoVal||'（未選択）';
+  document.getElementById('memo-sheet').classList.add('open');
+}
+function closeMemoSheet(){document.getElementById('memo-sheet').classList.remove('open');}
+function selectMemoTag(el){
+  const already=el.classList.contains('on');
+  document.querySelectorAll('.mtag').forEach(t=>t.classList.remove('on'));
+  if(!already){el.classList.add('on');memoVal=el.textContent;}
+  else{memoVal='';}
+  document.getElementById('memo-cur').textContent=memoVal||'（未選択）';
+}
+function confirmMemoSheet(){
+  const v=document.getElementById('memo-val');
+  v.textContent=memoVal||'メモ';
+  memoVal?v.classList.add('filled'):v.classList.remove('filled');
+  closeMemoSheet();
+}
 let calY, calM;
 const now=new Date();
 const todayStr=now.toISOString().slice(0,10);
@@ -281,9 +336,13 @@ function saveEntry(){
   const date=document.getElementById('f-date').value;
   if(!date){toast('日付を選んでね');return;}
   const cat=getSelectedCat('cat-btns');
-  entries.push({id:Date.now(),type:'expense',amount:amt,date,cat,memo:''});
+  entries.push({id:Date.now(),type:'expense',amount:amt,date,cat,memo:memoVal});
   save();
   calcVal='';updCalc();
+  memoVal='';
+  const mv=document.getElementById('memo-val');
+  mv.textContent='メモ';mv.classList.remove('filled');
+  document.querySelectorAll('.mtag').forEach(t=>t.classList.remove('on'));
   toast('保存したよ 🌸');
   renderStatus();
 }
