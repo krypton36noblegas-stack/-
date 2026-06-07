@@ -66,7 +66,7 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
 .memo-btn .mv{font-size:14px;font-weight:600;color:#ddc8dd;}
 .memo-btn .mv.filled{color:var(--text);}
 .memo-btn .ma{font-size:13px;color:var(--muted);}
-.memo-kb{display:none;position:fixed;bottom:0;left:12px;right:12px;z-index:50;}
+.memo-kb{display:none;position:fixed;bottom:8px;left:12px;right:12px;z-index:50;}
 .memo-kb.open{display:block;}
 .memo-kb>div{background:var(--surface);border-radius:var(--r) var(--r) 0 0;padding:6px 8px calc(6px + env(safe-area-inset-bottom));box-shadow:0 -4px 20px rgba(0,0,0,0.12);}
 .kb-disp{background:#2d1f2d;border-radius:var(--rs);padding:3px 10px;font-size:15px;font-weight:700;color:#fff;margin-bottom:5px;min-height:26px;display:flex;align-items:center;letter-spacing:0.05em;gap:4px;}
@@ -383,7 +383,7 @@ function applyFlick(key,dir){
 function showFlickPopup(btn,key,activeDir){
   const popup=document.getElementById('flick-popup');
   const map=FLICK_MAP[key]||{};
-  const spec={c:map.c||'',l:map.u||'',l:map.l||'',r:map.r||'',d:map.d||''};
+  const spec={c:map.c||'',u:map.u||'',l:map.l||'',r:map.r||'',d:map.d||''};
   if(key==='゛゜'){spec.c='゛';spec.u='゜';spec.r='小';spec.l='';spec.d='';}
   ['c','u','l','r','d'].forEach(k=>document.getElementById('fp-'+k).textContent=spec[k]);
   const rect=btn.getBoundingClientRect();
