@@ -21,9 +21,9 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
 .page.off-r{transform:translateX(100%);}
 .page.off-l{transform:translateX(-100%);}
 .nav{display:flex;justify-content:space-around;align-items:center;padding:0.5rem 0 calc(0.5rem + env(safe-area-inset-bottom));background:var(--surface);border-top:2px solid var(--pink-l);flex-shrink:0;}
-.nb{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;cursor:pointer;padding:4px 24px;}
-.nb .ni{font-size:24px;}
-.nb .nl{font-size:10px;color:var(--muted);font-weight:700;}
+.nb{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;cursor:pointer;padding:4px 12px;touch-action:manipulation;}
+.nb .ni{font-size:22px;}
+.nb .nl{font-size:9px;color:var(--muted);font-weight:700;}
 .nb.on .nl{color:var(--pink-d);}
 .scroll{flex:1;overflow-y:auto;padding:0 0.9rem 0.9rem;-webkit-overflow-scrolling:touch;}
 
@@ -36,10 +36,10 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
 .fcard{background:var(--surface);border-radius:var(--r);padding:0.65rem;border:2px solid var(--pink-l);margin-bottom:8px;}
 .ftitle{font-size:15px;font-weight:800;color:var(--text);margin-bottom:10px;}
 .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:7px;}
-.cat-btn{padding:5px 3px;border-radius:var(--rs);border:2.5px solid var(--hint);background:var(--bg);cursor:pointer;font-family:'Nunito','Noto Sans JP',sans-serif;color:var(--muted);transition:all 0.15s;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px;}
-.cat-btn img{width:32px;height:32px;object-fit:cover;border-radius:7px;}
+.cat-btn{padding:6px 3px;border-radius:var(--rs);border:2px solid #d8c0d0;background:var(--surface);cursor:pointer;font-family:'Nunito','Noto Sans JP',sans-serif;color:var(--muted);transition:all 0.15s;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px;box-shadow:0 1px 3px rgba(0,0,0,0.06);touch-action:manipulation;}
+.cat-btn img{width:36px;height:36px;object-fit:cover;border-radius:8px;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.12));}
 .cat-btn span{font-size:10px;font-weight:800;line-height:1.2;}
-.cat-btn.on{border-color:var(--pink);background:var(--pink-l);color:var(--pink-d);}
+.cat-btn.on{border-color:var(--pink-m);background:var(--pink-l);color:var(--pink-d);box-shadow:0 2px 6px rgba(255,143,171,0.35);}
 .field{margin-bottom:5px;overflow:hidden;}
 .field label{font-size:11px;font-weight:800;color:var(--muted);display:block;margin-bottom:4px;letter-spacing:0.05em;}
 .field input{width:100%;max-width:100%;padding:8px 12px;border:2px solid var(--hint);border-radius:var(--rs);font-size:15px;font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);outline:none;font-weight:600;box-sizing:border-box;min-width:0;-webkit-appearance:none;appearance:none;}
@@ -49,7 +49,7 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
 .sbtn:active{transform:translateY(3px);box-shadow:0 1px 0 #b83050;}
 .calc-disp{background:#2d1f2d;border-radius:var(--rs);padding:8px 14px;text-align:right;font-size:24px;font-weight:800;color:#fff;margin-bottom:6px;letter-spacing:0.02em;}
 .calc-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:7px;}
-.cpb{padding:9px 0;border-radius:12px;border:none;background:#fff;font-size:17px;font-weight:700;font-family:'Nunito',sans-serif;color:var(--text);cursor:pointer;box-shadow:0 3px 0 #e0c8e0;touch-action:manipulation;transition:transform 0.08s,box-shadow 0.08s;}
+.cpb{padding:9px 0;border-radius:12px;border:none;background:#fff;font-size:15px;font-weight:700;font-family:'Nunito',sans-serif;color:var(--text);cursor:pointer;box-shadow:0 3px 0 #e0c8e0;touch-action:manipulation;transition:transform 0.08s,box-shadow 0.08s;}
 .cpb:active{transform:translateY(2px);box-shadow:0 1px 0 #e0c8e0;}
 .cpb.del{color:var(--pink-d);background:var(--pink-l);box-shadow:0 3px 0 var(--pink);}
 .cpb.del:active{transform:translateY(2px);box-shadow:0 1px 0 var(--pink);}
@@ -115,12 +115,7 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
 <div class="page" id="ph">
   <div class="scroll">
     <div class="hdr">
-      <div><div class="hdr-sub" id="month-label"></div></div>
-      <div class="hdr-acts">
-        <button class="ib" onclick="exportData()">💾</button>
-        <button class="ib" onclick="document.getElementById('imp').click()">📂</button>
-        <input type="file" id="imp" accept=".json" style="display:none" onchange="importData(event)">
-      </div>
+      <div class="hdr-sub" id="month-label"></div>
     </div>
 
     <div class="fcard">
@@ -169,6 +164,8 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
   <nav class="nav">
     <button class="nb on" id="nh" onclick="showPage('h')"><span class="ni">🏠</span><span class="nl">ホーム</span></button>
     <button class="nb" id="nc" onclick="showPage('c')"><span class="ni">📅</span><span class="nl">カレンダー</span></button>
+    <button class="nb" onclick="exportData()"><span class="ni">💾</span><span class="nl">保存</span></button>
+    <button class="nb" onclick="document.getElementById('imp').click()"><span class="ni">📂</span><span class="nl">読込</span></button>
   </nav>
 </div>
 
@@ -217,9 +214,12 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
   <nav class="nav">
     <button class="nb" id="nh2" onclick="showPage('h')"><span class="ni">🏠</span><span class="nl">ホーム</span></button>
     <button class="nb on" id="nc2" onclick="showPage('c')"><span class="ni">📅</span><span class="nl">カレンダー</span></button>
+    <button class="nb" onclick="exportData()"><span class="ni">💾</span><span class="nl">保存</span></button>
+    <button class="nb" onclick="document.getElementById('imp').click()"><span class="ni">📂</span><span class="nl">読込</span></button>
   </nav>
 </div>
 
+<input type="file" id="imp" accept=".json" style="display:none" onchange="importData(event)">
 <div class="toast" id="toast"></div>
 <div class="mover" id="dmod">
   <div class="modal">
