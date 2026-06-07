@@ -71,15 +71,16 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
 .kb-disp{background:#2d1f2d;border-radius:var(--rs);padding:7px 12px;font-size:18px;font-weight:700;color:#fff;margin-bottom:8px;min-height:38px;display:flex;align-items:center;letter-spacing:0.05em;gap:4px;}
 .kb-disp .kd-text{flex:1;}
 .kb-disp .kd-del{font-size:16px;cursor:pointer;touch-action:manipulation;padding:4px 8px;background:rgba(255,255,255,0.15);border-radius:8px;border:none;color:#fff;}
-.kb-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-bottom:4px;}
-.kb-row{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-bottom:4px;}
-.kk{padding:8px 0;border-radius:8px;border:none;background:#fff;font-size:15px;font-weight:700;font-family:'Noto Sans JP',sans-serif;color:var(--text);cursor:pointer;box-shadow:0 2px 0 #e0c8e0;touch-action:manipulation;transition:transform 0.06s,box-shadow 0.06s;text-align:center;}
-.kk:active{transform:translateY(1px);box-shadow:0 1px 0 #e0c8e0;}
-.kk.special{background:var(--pink-l);color:var(--pink-d);font-size:13px;box-shadow:0 2px 0 var(--pink);}
-.kk.special:active{box-shadow:0 1px 0 var(--pink);}
-.kk.done{background:var(--pink-m);color:#fff;box-shadow:0 2px 0 #b83050;font-size:13px;}
-.kk.done:active{box-shadow:0 1px 0 #b83050;}
-.kk.empty{background:var(--bg);box-shadow:none;cursor:default;}
+.fk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:5px;}
+.fk-btm{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;}
+.fk{padding:13px 0;border-radius:10px;border:none;background:#fff;font-size:20px;font-weight:700;font-family:'Noto Sans JP',sans-serif;color:var(--text);cursor:pointer;box-shadow:0 3px 0 #e0c8e0;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;text-align:center;}
+.fk.pressing{background:var(--pink-l);}
+.fk-sp{background:var(--pink-l);color:var(--pink-d);font-size:14px;box-shadow:0 3px 0 var(--pink);}
+.fk-spc{background:var(--hint);color:var(--muted);font-size:14px;font-weight:800;box-shadow:0 3px 0 #d0b0d0;}
+.fk-done{background:var(--pink-m);color:#fff;font-size:14px;font-weight:800;box-shadow:0 3px 0 #b83050;}
+.flick-popup{position:fixed;z-index:300;pointer-events:none;display:none;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);width:108px;height:108px;background:rgba(255,255,255,0.97);border-radius:14px;box-shadow:0 8px 28px rgba(0,0,0,0.25),0 2px 8px rgba(0,0,0,0.1);overflow:hidden;}
+.fp-cell{display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:var(--text);font-family:'Noto Sans JP',sans-serif;}
+.fp-active{background:var(--pink-m);color:#fff;}
 
 .today-card{background:var(--surface);border-radius:var(--r);padding:0.65rem;border:2px solid var(--pink-l);}
 .today-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
@@ -252,21 +253,31 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
       <span class="kd-text" id="kb-text">　</span>
       <button class="kd-del" onclick="kbDel()">⌫</button>
     </div>
-    <div class="kb-grid">
-      <button class="kk" onclick="kbIn('あ')">あ</button><button class="kk" onclick="kbIn('い')">い</button><button class="kk" onclick="kbIn('う')">う</button><button class="kk" onclick="kbIn('え')">え</button><button class="kk" onclick="kbIn('お')">お</button>
-      <button class="kk" onclick="kbIn('か')">か</button><button class="kk" onclick="kbIn('き')">き</button><button class="kk" onclick="kbIn('く')">く</button><button class="kk" onclick="kbIn('け')">け</button><button class="kk" onclick="kbIn('こ')">こ</button>
-      <button class="kk" onclick="kbIn('さ')">さ</button><button class="kk" onclick="kbIn('し')">し</button><button class="kk" onclick="kbIn('す')">す</button><button class="kk" onclick="kbIn('せ')">せ</button><button class="kk" onclick="kbIn('そ')">そ</button>
-      <button class="kk" onclick="kbIn('た')">た</button><button class="kk" onclick="kbIn('ち')">ち</button><button class="kk" onclick="kbIn('つ')">つ</button><button class="kk" onclick="kbIn('て')">て</button><button class="kk" onclick="kbIn('と')">と</button>
-      <button class="kk" onclick="kbIn('な')">な</button><button class="kk" onclick="kbIn('に')">に</button><button class="kk" onclick="kbIn('ぬ')">ぬ</button><button class="kk" onclick="kbIn('ね')">ね</button><button class="kk" onclick="kbIn('の')">の</button>
-      <button class="kk" onclick="kbIn('は')">は</button><button class="kk" onclick="kbIn('ひ')">ひ</button><button class="kk" onclick="kbIn('ふ')">ふ</button><button class="kk" onclick="kbIn('へ')">へ</button><button class="kk" onclick="kbIn('ほ')">ほ</button>
-      <button class="kk" onclick="kbIn('ま')">ま</button><button class="kk" onclick="kbIn('み')">み</button><button class="kk" onclick="kbIn('む')">む</button><button class="kk" onclick="kbIn('め')">め</button><button class="kk" onclick="kbIn('も')">も</button>
-      <button class="kk" onclick="kbIn('や')">や</button><button class="kk empty"></button><button class="kk" onclick="kbIn('ゆ')">ゆ</button><button class="kk empty"></button><button class="kk" onclick="kbIn('よ')">よ</button>
-      <button class="kk" onclick="kbIn('ら')">ら</button><button class="kk" onclick="kbIn('り')">り</button><button class="kk" onclick="kbIn('る')">る</button><button class="kk" onclick="kbIn('れ')">れ</button><button class="kk" onclick="kbIn('ろ')">ろ</button>
-      <button class="kk" onclick="kbIn('わ')">わ</button><button class="kk" onclick="kbIn('を')">を</button><button class="kk" onclick="kbIn('ん')">ん</button><button class="kk" onclick="kbIn('っ')">っ</button><button class="kk" onclick="kbIn('ー')">ー</button>
-      <button class="kk special" onclick="kbDakuten('゛')">゛</button><button class="kk special" onclick="kbDakuten('゜')">゜</button><button class="kk special" onclick="kbIn('ゃ')">ゃ</button><button class="kk special" onclick="kbIn('ゅ')">ゅ</button><button class="kk special" onclick="kbIn('ょ')">ょ</button>
-      <button class="kk special" onclick="kbIn('　')">空白</button><button class="kk special" onclick="kbIn('、')">、</button><button class="kk special" onclick="kbIn('。')">。</button><button class="kk special" onclick="kbClr()">クリア</button><button class="kk done" onclick="confirmMemoSheet()">完了</button>
+    <div class="fk-grid">
+      <button class="fk" data-key="あ">あ</button>
+      <button class="fk" data-key="か">か</button>
+      <button class="fk" data-key="さ">さ</button>
+      <button class="fk" data-key="た">た</button>
+      <button class="fk" data-key="な">な</button>
+      <button class="fk" data-key="は">は</button>
+      <button class="fk" data-key="ま">ま</button>
+      <button class="fk" data-key="や">や</button>
+      <button class="fk" data-key="ら">ら</button>
+      <button class="fk fk-sp" data-key="゛゜">゛゜</button>
+      <button class="fk" data-key="わ">わ</button>
+      <button class="fk fk-sp" id="fk-del">⌫</button>
+    </div>
+    <div class="fk-btm">
+      <button class="fk fk-sp" data-key="、">、</button>
+      <button class="fk fk-spc" onclick="kbIn('　')">空白</button>
+      <button class="fk fk-done" onclick="confirmMemoSheet()">完了</button>
     </div>
   </div>
+</div>
+<div id="flick-popup" class="flick-popup">
+  <div class="fp-cell"></div><div class="fp-cell" id="fp-u"></div><div class="fp-cell"></div>
+  <div class="fp-cell" id="fp-l"></div><div class="fp-cell" id="fp-c"></div><div class="fp-cell" id="fp-r"></div>
+  <div class="fp-cell"></div><div class="fp-cell" id="fp-d"></div><div class="fp-cell"></div>
 </div>
 <div class="mover" id="dmod">
   <div class="modal">
@@ -293,17 +304,114 @@ function updCalc(){const v=parseInt(calcVal)||0;document.getElementById('calc-di
 let memoVal='';
 const DAKUTEN={'か':'が','き':'ぎ','く':'ぐ','け':'げ','こ':'ご','さ':'ざ','し':'じ','す':'ず','せ':'ぜ','そ':'ぞ','た':'だ','ち':'ぢ','つ':'づ','て':'で','と':'ど','は':'ば','ひ':'び','ふ':'ぶ','へ':'べ','ほ':'ぼ','が':'か','ぎ':'き','ぐ':'く','げ':'け','ご':'こ','ざ':'さ','じ':'し','ず':'す','ぜ':'せ','ぞ':'そ','だ':'た','ぢ':'ち','づ':'つ','で':'て','ど':'と','ば':'は','び':'ひ','ぶ':'ふ','べ':'へ','ぼ':'ほ'};
 const HANDAKUTEN={'は':'ぱ','ひ':'ぴ','ふ':'ぷ','へ':'ぺ','ほ':'ぽ','ば':'ぱ','び':'ぴ','ぶ':'ぷ','べ':'ぺ','ぼ':'ぽ','ぱ':'は','ぴ':'ひ','ぷ':'ふ','ぺ':'へ','ぽ':'ほ'};
+const SMALL={'あ':'ぁ','い':'ぃ','う':'ぅ','え':'ぇ','お':'ぉ','や':'ゃ','ゆ':'ゅ','よ':'ょ','つ':'っ','わ':'ゎ','ぁ':'あ','ぃ':'い','ぅ':'う','ぇ':'え','ぉ':'お','ゃ':'や','ゅ':'ゆ','ょ':'よ','っ':'つ','ゎ':'わ'};
+const FLICK_MAP={
+  'あ':{c:'あ',u:'い',r:'う',d:'え',l:'お'},
+  'か':{c:'か',u:'き',r:'く',d:'け',l:'こ'},
+  'さ':{c:'さ',u:'し',r:'す',d:'せ',l:'そ'},
+  'た':{c:'た',u:'ち',r:'つ',d:'て',l:'と'},
+  'な':{c:'な',u:'に',r:'ぬ',d:'ね',l:'の'},
+  'は':{c:'は',u:'ひ',r:'ふ',d:'へ',l:'ほ'},
+  'ま':{c:'ま',u:'み',r:'む',d:'め',l:'も'},
+  'や':{c:'や',u:null,r:'ゆ',d:null,l:'よ'},
+  'ら':{c:'ら',u:'り',r:'る',d:'れ',l:'ろ'},
+  'わ':{c:'わ',u:null,r:'を',d:'ん',l:'ー'},
+  '、':{c:'、',u:'。',r:'？',d:'！',l:'…'},
+};
 function kbIn(c){memoVal+=c;updKb();}
 function kbDel(){memoVal=[...memoVal].slice(0,-1).join('');updKb();}
 function kbClr(){memoVal='';updKb();}
-function kbDakuten(type){
-  const chars=[...memoVal];
-  if(!chars.length)return;
-  const last=chars[chars.length-1];
-  const map=type==='゛'?DAKUTEN:HANDAKUTEN;
-  if(map[last]){chars[chars.length-1]=map[last];memoVal=chars.join('');updKb();}
-}
 function updKb(){document.getElementById('kb-text').textContent=memoVal||'　';}
+
+const FK_THRESH=20;
+let fkStart=null,fkKey=null,fkDir='c';
+
+function initFlickKeys(){
+  document.querySelectorAll('.fk[data-key]').forEach(btn=>{
+    const key=btn.dataset.key;
+    btn.addEventListener('touchstart',e=>{
+      e.preventDefault();
+      const t=e.touches[0];
+      fkStart={x:t.clientX,y:t.clientY};
+      fkKey=key;fkDir='c';
+      btn.classList.add('pressing');
+      showFlickPopup(btn,key,'c');
+    },{passive:false});
+    btn.addEventListener('touchmove',e=>{
+      e.preventDefault();
+      if(!fkStart)return;
+      const t=e.touches[0];
+      const dx=t.clientX-fkStart.x,dy=t.clientY-fkStart.y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      let dir='c';
+      if(dist>FK_THRESH){
+        if(Math.abs(dy)>=Math.abs(dx))dir=dy<0?'u':'d';
+        else dir=dx<0?'l':'r';
+      }
+      if(dir!==fkDir){fkDir=dir;updateFlickPopup(key,dir);}
+    },{passive:false});
+    btn.addEventListener('touchend',e=>{
+      e.preventDefault();
+      btn.classList.remove('pressing');
+      if(fkKey)applyFlick(fkKey,fkDir);
+      hideFlickPopup();
+      fkStart=null;fkKey=null;fkDir='c';
+    },{passive:false});
+    btn.addEventListener('touchcancel',()=>{
+      btn.classList.remove('pressing');
+      hideFlickPopup();
+      fkStart=null;fkKey=null;
+    });
+  });
+  const del=document.getElementById('fk-del');
+  let delTimer=null;
+  del.addEventListener('touchstart',e=>{e.preventDefault();kbDel();delTimer=setInterval(kbDel,140);},{passive:false});
+  del.addEventListener('touchend',e=>{e.preventDefault();clearInterval(delTimer);},{passive:false});
+  del.addEventListener('touchcancel',()=>clearInterval(delTimer));
+}
+
+function applyFlick(key,dir){
+  if(key==='゛゜'){
+    const chars=[...memoVal];if(!chars.length)return;
+    const last=chars[chars.length-1];
+    if(dir==='c'&&DAKUTEN[last]){chars[chars.length-1]=DAKUTEN[last];memoVal=chars.join('');updKb();}
+    else if(dir==='u'&&HANDAKUTEN[last]){chars[chars.length-1]=HANDAKUTEN[last];memoVal=chars.join('');updKb();}
+    else if(dir==='r'&&SMALL[last]){chars[chars.length-1]=SMALL[last];memoVal=chars.join('');updKb();}
+    return;
+  }
+  const map=FLICK_MAP[key];if(!map)return;
+  const ch=map[dir]!=null?map[dir]:map.c;
+  if(ch)kbIn(ch);
+}
+
+function showFlickPopup(btn,key,activeDir){
+  const popup=document.getElementById('flick-popup');
+  const map=FLICK_MAP[key]||{};
+  const spec={c:map.c||'',u:map.u||'',l:map.l||'',r:map.r||'',d:map.d||''};
+  if(key==='゛゜'){spec.c='゛';spec.u='゜';spec.r='小';spec.l='';spec.d='';}
+  ['c','u','l','r','d'].forEach(k=>document.getElementById('fp-'+k).textContent=spec[k]);
+  const rect=btn.getBoundingClientRect();
+  const pw=108,ph=108;
+  let left=rect.left+rect.width/2-pw/2;
+  let top=rect.top-ph-8;
+  left=Math.max(4,Math.min(left,window.innerWidth-pw-4));
+  if(top<4)top=rect.bottom+8;
+  popup.style.left=left+'px';
+  popup.style.top=top+'px';
+  popup.style.display='grid';
+  updateFlickPopup(key,activeDir);
+}
+
+function updateFlickPopup(key,dir){
+  ['u','l','c','r','d'].forEach(d=>{
+    const el=document.getElementById('fp-'+d);
+    if(el)el.className='fp-cell'+(d===dir?' fp-active':'');
+  });
+}
+
+function hideFlickPopup(){
+  document.getElementById('flick-popup').style.display='none';
+}
 function openMemoSheet(){
   updKb();
   document.getElementById('memo-sheet').classList.add('open');
@@ -505,7 +613,7 @@ function renderStatus(){
   sub.textContent='今月予測 ¥'+projected.toLocaleString('ja-JP')+'（'+day+'日時点）';
 }
 
-load();renderCal();renderStatus();
+load();renderCal();renderStatus();initFlickKeys();
 </script>
 </body>
 </html>
