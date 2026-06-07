@@ -42,7 +42,7 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
 .cat-btn.on{border-color:var(--pink);background:var(--pink-l);color:var(--pink-d);}
 .field{margin-bottom:8px;}
 .field label{font-size:11px;font-weight:800;color:var(--muted);display:block;margin-bottom:4px;letter-spacing:0.05em;}
-.field input{width:100%;padding:9px 12px;border:2px solid var(--hint);border-radius:var(--rs);font-size:15px;font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);outline:none;font-weight:600;}
+.field input{width:100%;padding:9px 12px;border:2px solid var(--hint);border-radius:var(--rs);font-size:15px;font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);outline:none;font-weight:600;box-sizing:border-box;min-width:0;}
 .field input:focus{border-color:var(--pink);}
 .sbtn{width:100%;padding:11px;background:var(--pink-m);color:white;border:none;border-radius:var(--rs);font-size:15px;font-weight:800;cursor:pointer;font-family:'Nunito','Noto Sans JP',sans-serif;letter-spacing:0.05em;}
 
@@ -105,7 +105,7 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
 <div class="page" id="ph">
   <div class="scroll">
     <div class="hdr">
-      <div><div class="hdr-title">🌸 家計簿</div><div class="hdr-sub" id="month-label"></div></div>
+      <div><div class="hdr-sub" id="month-label"></div></div>
       <div class="hdr-acts">
         <button class="ib" onclick="exportData()">💾</button>
         <button class="ib" onclick="document.getElementById('imp').click()">📂</button>
@@ -114,9 +114,8 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
     </div>
 
     <div class="fcard">
-      <div class="field"><label>日付</label><input type="date" id="f-date"></div>
-      <div class="field"><label>金額</label><input type="number" id="f-amt" placeholder="例: 1200" inputmode="numeric"></div>
-      <div class="field"><label>カテゴリ</label></div>
+      <div class="field"><input type="date" id="f-date"></div>
+      <div class="field"><input type="number" id="f-amt" placeholder="金額 (例: 1200)" inputmode="numeric"></div>
       <div class="cat-grid" id="cat-btns">
         <button class="cat-btn on" data-cat="外食" onclick="selectCat(this,'cat-btns')">
           <img src="cat_gaishoku.jpg" alt="外食"><span>外食</span>
@@ -131,7 +130,7 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
           <img src="cat_kousai.jpg" alt="交際費"><span>交際費</span>
         </button>
       </div>
-      <div class="field"><label>メモ（任意）</label><input type="text" id="f-memo" placeholder="例: ランチ"></div>
+      <div class="field"><input type="text" id="f-memo" placeholder="メモ (任意)"></div>
       <button class="sbtn" onclick="saveEntry()">保存する 🌸</button>
     </div>
 
