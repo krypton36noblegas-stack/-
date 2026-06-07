@@ -250,10 +250,6 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
 <div class="toast" id="toast"></div>
 <div class="memo-kb" id="memo-sheet">
   <div>
-    <div class="kb-disp">
-      <span class="kd-text" id="kb-text">　</span>
-      <button class="kd-del" onclick="kbDel()">⌫</button>
-    </div>
     <div class="fk-grid">
       <button class="fk" data-key="あ">あ</button>
       <button class="fk" data-key="か">か</button>
@@ -267,11 +263,6 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
       <button class="fk fk-sp" data-key="゛゜">゛゜</button>
       <button class="fk" data-key="わ">わ</button>
       <button class="fk fk-sp" id="fk-del">⌫</button>
-    </div>
-    <div class="fk-btm">
-      <button class="fk fk-sp" data-key="、">、</button>
-      <button class="fk fk-spc" onclick="kbIn('　')">空白</button>
-      <button class="fk fk-done" onclick="confirmMemoSheet()">完了</button>
     </div>
   </div>
 </div>
@@ -322,7 +313,11 @@ const FLICK_MAP={
 function kbIn(c){memoVal+=c;updKb();}
 function kbDel(){memoVal=[...memoVal].slice(0,-1).join('');updKb();}
 function kbClr(){memoVal='';updKb();}
-function updKb(){document.getElementById('kb-text').textContent=memoVal||'　';}
+function updKb(){
+  const v=document.getElementById('memo-val');
+  v.textContent=memoVal.trim()||'メモ';
+  memoVal.trim()?v.classList.add('filled'):v.classList.remove('filled');
+}
 
 const FK_THRESH=20;
 let fkStart=null,fkKey=null,fkDir='c';
@@ -414,16 +409,9 @@ function hideFlickPopup(){
   document.getElementById('flick-popup').style.display='none';
 }
 function openMemoSheet(){
-  updKb();
-  document.getElementById('memo-sheet').classList.add('open');
+  document.getElementById('memo-sheet').classList.toggle('open');
 }
 function closeMemoSheet(){document.getElementById('memo-sheet').classList.remove('open');}
-function confirmMemoSheet(){
-  const v=document.getElementById('memo-val');
-  v.textContent=memoVal.trim()||'メモ';
-  memoVal.trim()?v.classList.add('filled'):v.classList.remove('filled');
-  closeMemoSheet();
-}
 let calY, calM;
 const now=new Date();
 const todayStr=now.toISOString().slice(0,10);
