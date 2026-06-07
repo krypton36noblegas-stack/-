@@ -58,6 +58,10 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
 .cpb.clr:active{transform:translateY(2px);box-shadow:0 1px 0 #ffb3c6;}
 .divider{height:2px;background:linear-gradient(to right,transparent,var(--pink),transparent);border-radius:99px;margin:6px 0 8px;}
 .app-title{font-size:17px;font-weight:800;color:var(--pink-d);padding:0.55rem 0 0.3rem;letter-spacing:0.06em;text-align:center;}
+.status-card{border-radius:var(--r);padding:10px 12px;text-align:center;transition:background 0.5s;margin-bottom:4px;}
+.status-face{font-size:28px;margin-bottom:4px;transition:color 0.5s;letter-spacing:0.05em;}
+.status-msg{font-size:13px;font-weight:800;margin-bottom:3px;transition:color 0.5s;}
+.status-sub{font-size:10px;color:var(--muted);font-weight:600;}
 
 .today-card{background:var(--surface);border-radius:var(--r);padding:0.65rem;border:2px solid var(--pink-l);}
 .today-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
@@ -153,6 +157,12 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
       </div>
       <div class="field"><input type="text" id="f-memo" placeholder="メモ (任意)"></div>
       <button class="sbtn" onclick="saveEntry()">ほぞん</button>
+    </div>
+
+    <div class="status-card" id="status-card">
+      <div class="status-face" id="status-face"></div>
+      <div class="status-msg" id="status-msg"></div>
+      <div class="status-sub" id="status-sub"></div>
     </div>
 
   </div>
@@ -253,7 +263,7 @@ function showPage(p){
   document.getElementById('ph').className='page'+(p==='h'?'':' off-l');
   document.getElementById('pc').className='page'+(p==='c'?'':' off-r');
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
-  if(p==='h'){document.getElementById('nh').classList.add('on');}
+  if(p==='h'){document.getElementById('nh').classList.add('on');renderStatus();}
   else{document.getElementById('nc2').classList.add('on');renderCal();}
 }
 
@@ -278,7 +288,7 @@ function saveEntry(){
   calcVal='';updCalc();
   document.getElementById('f-memo').value='';
   toast('保存したよ 🌸');
-  renderToday();
+  renderStatus();
 }
 
 function saveCalEntry(){
@@ -401,7 +411,30 @@ function changeMonth(d){
   renderCal();
 }
 
-load();renderCal();
+function renderStatus(){
+  const d=new Date();
+  const y=d.getFullYear(),m=d.getMonth(),day=d.getDate();
+  const daysInMonth=new Date(y,m+1,0).getDate();
+  const moStr=y+'-'+String(m+1).padStart(2,'0');
+  const total=entries.filter(e=>e.date.startsWith(moStr)).reduce((s,e)=>s+e.amount,0);
+  const projected=day>0?Math.round(total/day*daysInMonth):0;
+  const card=document.getElementById('status-card');
+  const face=document.getElementById('status-face');
+  const msg=document.getElementById('status-msg');
+  const sub=document.getElementById('status-sub');
+  let f,t,bg,col;
+  if(projected<20000){f='（＾▽＾）✨';t='さいふがあつい！';bg='#e8f8f0';col='#3aab7a';}
+  else if(projected<40000){f='（＾ω＾）';t='ゆとりあり〜';bg='#e8f4ff';col='#5080d0';}
+  else if(projected<70000){f='（・・；）';t='ふつうかな...';bg='#fffae0';col='#b09020';}
+  else if(projected<100000){f='（；＿；）💸';t='ちょっとまずい';bg='#fff0e4';col='#d07030';}
+  else{f='（T_T）';t='さいふが...からっぽ';bg='#ffe4e8';col='#d04060';}
+  card.style.background=bg;
+  face.style.color=col; face.textContent=f;
+  msg.style.color=col; msg.textContent=t;
+  sub.textContent='今月予測 ¥'+projected.toLocaleString('ja-JP')+'（'+day+'日時点）';
+}
+
+load();renderCal();renderStatus();
 </script>
 </body>
 </html>
