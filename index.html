@@ -603,6 +603,14 @@ function renderStatus(){
 }
 
 load();renderCal();renderStatus();initFlickKeys();
+
+document.addEventListener('touchstart',function(e){
+  const sheet=document.getElementById('memo-sheet');
+  const memoBtn=document.querySelector('.memo-btn');
+  if(sheet.classList.contains('open')&&!sheet.contains(e.target)&&!memoBtn.contains(e.target)){
+    closeMemoSheet();
+  }
+},{passive:true});
 </script>
 </body>
 </html>
