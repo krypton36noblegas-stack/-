@@ -67,13 +67,13 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
 .memo-btn .mv.filled{color:var(--text);}
 .memo-btn .ma{font-size:13px;color:var(--muted);}
 .memo-sheet{align-items:flex-end;}
-.memo-sheet .modal{padding:10px 10px calc(10px + env(safe-area-inset-bottom));border-radius:var(--r) var(--r) 0 0;}
-.kb-disp{background:#2d1f2d;border-radius:var(--rs);padding:7px 12px;font-size:18px;font-weight:700;color:#fff;margin-bottom:8px;min-height:38px;display:flex;align-items:center;letter-spacing:0.05em;gap:4px;}
+.memo-sheet .modal{padding:8px 8px calc(8px + env(safe-area-inset-bottom));border-radius:var(--r) var(--r) 0 0;}
+.kb-disp{background:#2d1f2d;border-radius:var(--rs);padding:5px 12px;font-size:17px;font-weight:700;color:#fff;margin-bottom:6px;min-height:34px;display:flex;align-items:center;letter-spacing:0.05em;gap:4px;}
 .kb-disp .kd-text{flex:1;}
 .kb-disp .kd-del{font-size:16px;cursor:pointer;touch-action:manipulation;padding:4px 8px;background:rgba(255,255,255,0.15);border-radius:8px;border:none;color:#fff;}
-.fk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:5px;}
-.fk-btm{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;}
-.fk{padding:13px 0;border-radius:10px;border:none;background:#fff;font-size:20px;font-weight:700;font-family:'Noto Sans JP',sans-serif;color:var(--text);cursor:pointer;box-shadow:0 3px 0 #e0c8e0;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;text-align:center;}
+.fk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:4px;}
+.fk-btm{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;}
+.fk{padding:10px 0;border-radius:10px;border:none;background:#fff;font-size:18px;font-weight:700;font-family:'Noto Sans JP',sans-serif;color:var(--text);cursor:pointer;box-shadow:0 3px 0 #e0c8e0;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;text-align:center;}
 .fk.pressing{background:var(--pink-l);}
 .fk-sp{background:var(--pink-l);color:var(--pink-d);font-size:14px;box-shadow:0 3px 0 var(--pink);}
 .fk-spc{background:var(--hint);color:var(--muted);font-size:14px;font-weight:800;box-shadow:0 3px 0 #d0b0d0;}
@@ -306,17 +306,17 @@ const DAKUTEN={'か':'が','き':'ぎ','く':'ぐ','け':'げ','こ':'ご','さ'
 const HANDAKUTEN={'は':'ぱ','ひ':'ぴ','ふ':'ぷ','へ':'ぺ','ほ':'ぽ','ば':'ぱ','び':'ぴ','ぶ':'ぷ','べ':'ぺ','ぼ':'ぽ','ぱ':'は','ぴ':'ひ','ぷ':'ふ','ぺ':'へ','ぽ':'ほ'};
 const SMALL={'あ':'ぁ','い':'ぃ','う':'ぅ','え':'ぇ','お':'ぉ','や':'ゃ','ゆ':'ゅ','よ':'ょ','つ':'っ','わ':'ゎ','ぁ':'あ','ぃ':'い','ぅ':'う','ぇ':'え','ぉ':'お','ゃ':'や','ゅ':'ゆ','ょ':'よ','っ':'つ','ゎ':'わ'};
 const FLICK_MAP={
-  'あ':{c:'あ',u:'い',r:'う',d:'え',l:'お'},
-  'か':{c:'か',u:'き',r:'く',d:'け',l:'こ'},
-  'さ':{c:'さ',u:'し',r:'す',d:'せ',l:'そ'},
-  'た':{c:'た',u:'ち',r:'つ',d:'て',l:'と'},
-  'な':{c:'な',u:'に',r:'ぬ',d:'ね',l:'の'},
-  'は':{c:'は',u:'ひ',r:'ふ',d:'へ',l:'ほ'},
-  'ま':{c:'ま',u:'み',r:'む',d:'め',l:'も'},
-  'や':{c:'や',u:null,r:'ゆ',d:null,l:'よ'},
-  'ら':{c:'ら',u:'り',r:'る',d:'れ',l:'ろ'},
-  'わ':{c:'わ',u:null,r:'を',d:'ん',l:'ー'},
-  '、':{c:'、',u:'。',r:'？',d:'！',l:'…'},
+  'あ':{c:'あ',u:'い',l:'う',d:'え',r:'お'},
+  'か':{c:'か',u:'き',l:'く',d:'け',r:'こ'},
+  'さ':{c:'さ',u:'し',l:'す',d:'せ',r:'そ'},
+  'た':{c:'た',u:'ち',l:'つ',d:'て',r:'と'},
+  'な':{c:'な',u:'に',l:'ぬ',d:'ね',r:'の'},
+  'は':{c:'は',u:'ひ',l:'ふ',d:'へ',r:'ほ'},
+  'ま':{c:'ま',u:'み',l:'む',d:'め',r:'も'},
+  'や':{c:'や',u:null,l:'ゆ',d:null,r:'よ'},
+  'ら':{c:'ら',u:'り',l:'る',d:'れ',r:'ろ'},
+  'わ':{c:'わ',u:null,l:'を',d:'ん',r:'ー'},
+  '、':{c:'、',u:'。',l:'？',d:'！',r:'…'},
 };
 function kbIn(c){memoVal+=c;updKb();}
 function kbDel(){memoVal=[...memoVal].slice(0,-1).join('');updKb();}
