@@ -55,6 +55,7 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
 .cpb.del:active{transform:translateY(2px);box-shadow:0 1px 0 var(--pink);}
 .cpb.clr{color:#c0445a;background:#ffe4ea;box-shadow:0 3px 0 #ffb3c6;font-size:12px;font-weight:800;}
 .cpb.clr:active{transform:translateY(2px);box-shadow:0 1px 0 #ffb3c6;}
+.divider{height:2px;background:linear-gradient(to right,transparent,var(--pink),transparent);border-radius:99px;margin:6px 0 8px;}
 
 .today-card{background:var(--surface);border-radius:var(--r);padding:0.65rem;border:2px solid var(--pink-l);}
 .today-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
@@ -114,9 +115,6 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
 <!-- HOME -->
 <div class="page" id="ph">
   <div class="scroll">
-    <div class="hdr">
-      <div class="hdr-sub" id="month-label"></div>
-    </div>
 
     <div class="fcard">
       <div class="field"><input type="date" id="f-date"></div>
@@ -135,6 +133,7 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
         <button class="cpb" onclick="calcIn('0')">0</button>
         <button class="cpb del" onclick="calcDel()">⌫</button>
       </div>
+      <div class="divider"></div>
       <div class="cat-grid" id="cat-btns">
         <button class="cat-btn on" data-cat="外食" onclick="selectCat(this,'cat-btns')">
           <img src="cat_gaishoku.jpg" alt="外食"><span>外食</span>
@@ -153,13 +152,6 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
       <button class="sbtn" onclick="saveEntry()">保存する 🌸</button>
     </div>
 
-    <div class="today-card">
-      <div class="today-hdr">
-        <div class="today-title">今日の記録</div>
-        <div class="today-total" id="today-total"></div>
-      </div>
-      <div id="today-list"><p class="empty">今日の記録はまだないよ 🌸</p></div>
-    </div>
   </div>
   <nav class="nav">
     <button class="nb on" id="nh" onclick="showPage('h')"><span class="ni">🏠</span><span class="nl">ホーム</span></button>
@@ -252,14 +244,13 @@ function save(){try{localStorage.setItem(KEY,JSON.stringify(entries));}catch(e){
 function fmt(n){return '¥'+Math.round(Math.abs(n)).toLocaleString('ja-JP');}
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
 
-document.getElementById('month-label').textContent=now.getFullYear()+'年'+(now.getMonth()+1)+'月';
 document.getElementById('f-date').value=todayStr;
 
 function showPage(p){
   document.getElementById('ph').className='page'+(p==='h'?'':' off-l');
   document.getElementById('pc').className='page'+(p==='c'?'':' off-r');
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
-  if(p==='h'){document.getElementById('nh').classList.add('on');renderToday();}
+  if(p==='h'){document.getElementById('nh').classList.add('on');}
   else{document.getElementById('nc2').classList.add('on');renderCal();}
 }
 
@@ -407,7 +398,7 @@ function changeMonth(d){
   renderCal();
 }
 
-load();renderToday();renderCal();
+load();renderCal();
 </script>
 </body>
 </html>
