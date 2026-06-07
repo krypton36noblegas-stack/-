@@ -62,6 +62,12 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
 .status-face{font-size:22px;margin-bottom:2px;transition:color 0.5s;letter-spacing:0.05em;}
 .status-msg{font-size:12px;font-weight:800;margin-bottom:2px;transition:color 0.5s;}
 .status-sub{font-size:10px;color:var(--muted);font-weight:600;}
+.memo-display{width:100%;padding:4px 12px;border:2px solid var(--hint);border-radius:var(--rs);font-size:15px;font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:#ddc8dd;font-weight:500;min-height:32px;display:flex;align-items:center;cursor:text;touch-action:manipulation;box-sizing:border-box;}
+.memo-display.filled{color:var(--text);font-weight:600;}
+.memo-overlay{display:none;position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--surface);padding:10px 12px calc(10px + env(safe-area-inset-bottom));border-top:2px solid var(--pink-l);gap:8px;align-items:center;box-shadow:0 -4px 20px rgba(0,0,0,0.08);}
+.memo-overlay.open{display:flex;}
+.memo-overlay input{flex:1;padding:8px 12px;border:2px solid var(--pink);border-radius:var(--rs);font-size:15px;font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);outline:none;font-weight:600;-webkit-appearance:none;appearance:none;}
+.memo-confirm{padding:8px 16px;background:var(--pink-m);color:white;border:none;border-radius:var(--rs);font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;touch-action:manipulation;white-space:nowrap;}
 
 .today-card{background:var(--surface);border-radius:var(--r);padding:0.65rem;border:2px solid var(--pink-l);}
 .today-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
@@ -155,7 +161,8 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
           <img src="cat_kousai.jpg" alt="交際費"><span>交際費</span>
         </button>
       </div>
-      <div class="field"><input type="text" id="f-memo" placeholder="メモ (任意)"></div>
+      <input type="text" id="f-memo" style="display:none">
+      <div class="field"><div class="memo-display" id="memo-display" onclick="openMemoOverlay()"><span id="memo-text">メモ (任意)</span></div></div>
       <button class="sbtn" onclick="saveEntry()">ほぞん</button>
     </div>
 
@@ -225,6 +232,10 @@ body{font-family:'Nunito','Noto Sans JP',sans-serif;background:var(--bg);color:v
 </div>
 
 <input type="file" id="imp" accept=".json" style="display:none" onchange="importData(event)">
+<div class="memo-overlay" id="memo-overlay">
+  <input type="text" id="memo-overlay-input" placeholder="メモ (任意)">
+  <button class="memo-confirm" onclick="memoConfirm()">完了</button>
+</div>
 <div class="toast" id="toast"></div>
 <div class="mover" id="dmod">
   <div class="modal">
@@ -287,6 +298,8 @@ function saveEntry(){
   save();
   calcVal='';updCalc();
   document.getElementById('f-memo').value='';
+  document.getElementById('memo-text').textContent='メモ (任意)';
+  document.getElementById('memo-display').classList.remove('filled');
   toast('保存したよ 🌸');
   renderStatus();
 }
@@ -409,6 +422,23 @@ function changeMonth(d){
   selDate=null;
   document.getElementById('day-detail').style.display='none';
   renderCal();
+}
+
+function openMemoOverlay(){
+  const ov=document.getElementById('memo-overlay');
+  document.getElementById('memo-overlay-input').value=document.getElementById('f-memo').value;
+  ov.classList.add('open');
+  setTimeout(()=>document.getElementById('memo-overlay-input').focus(),80);
+}
+function memoConfirm(){
+  const val=document.getElementById('memo-overlay-input').value.trim();
+  document.getElementById('f-memo').value=val;
+  const disp=document.getElementById('memo-display');
+  const txt=document.getElementById('memo-text');
+  if(val){txt.textContent=val;disp.classList.add('filled');}
+  else{txt.textContent='メモ (任意)';disp.classList.remove('filled');}
+  document.getElementById('memo-overlay').classList.remove('open');
+  document.getElementById('memo-overlay-input').blur();
 }
 
 function renderStatus(){
