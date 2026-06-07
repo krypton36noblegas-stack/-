@@ -306,17 +306,17 @@ const DAKUTEN={'か':'が','き':'ぎ','く':'ぐ','け':'げ','こ':'ご','さ'
 const HANDAKUTEN={'は':'ぱ','ひ':'ぴ','ふ':'ぷ','へ':'ぺ','ほ':'ぽ','ば':'ぱ','び':'ぴ','ぶ':'ぷ','べ':'ぺ','ぼ':'ぽ','ぱ':'は','ぴ':'ひ','ぷ':'ふ','ぺ':'へ','ぽ':'ほ'};
 const SMALL={'あ':'ぁ','い':'ぃ','う':'ぅ','え':'ぇ','お':'ぉ','や':'ゃ','ゆ':'ゅ','よ':'ょ','つ':'っ','わ':'ゎ','ぁ':'あ','ぃ':'い','ぅ':'う','ぇ':'え','ぉ':'お','ゃ':'や','ゅ':'ゆ','ょ':'よ','っ':'つ','ゎ':'わ'};
 const FLICK_MAP={
-  'あ':{c:'あ',u:'い',l:'う',d:'え',r:'お'},
-  'か':{c:'か',u:'き',l:'く',d:'け',r:'こ'},
-  'さ':{c:'さ',u:'し',l:'す',d:'せ',r:'そ'},
-  'た':{c:'た',u:'ち',l:'つ',d:'て',r:'と'},
-  'な':{c:'な',u:'に',l:'ぬ',d:'ね',r:'の'},
-  'は':{c:'は',u:'ひ',l:'ふ',d:'へ',r:'ほ'},
-  'ま':{c:'ま',u:'み',l:'む',d:'め',r:'も'},
-  'や':{c:'や',u:null,l:'ゆ',d:null,r:'よ'},
-  'ら':{c:'ら',u:'り',l:'る',d:'れ',r:'ろ'},
-  'わ':{c:'わ',u:null,l:'を',d:'ん',r:'ー'},
-  '、':{c:'、',u:'。',l:'？',d:'！',r:'…'},
+  'あ':{c:'あ',l:'い',u:'う',r:'え',d:'お'},
+  'か':{c:'か',l:'き',u:'く',r:'け',d:'こ'},
+  'さ':{c:'さ',l:'し',u:'す',r:'せ',d:'そ'},
+  'た':{c:'た',l:'ち',u:'つ',r:'て',d:'と'},
+  'な':{c:'な',l:'に',u:'ぬ',r:'ね',d:'の'},
+  'は':{c:'は',l:'ひ',u:'ふ',r:'へ',d:'ほ'},
+  'ま':{c:'ま',l:'み',u:'む',r:'め',d:'も'},
+  'や':{c:'や',l:null,u:'ゆ',r:null,d:'よ'},
+  'ら':{c:'ら',l:'り',u:'る',r:'れ',d:'ろ'},
+  'わ':{c:'わ',l:null,u:'を',r:'ん',d:'ー'},
+  '、':{c:'、',l:'。',u:'？',r:'！',d:'…'},
 };
 function kbIn(c){memoVal+=c;updKb();}
 function kbDel(){memoVal=[...memoVal].slice(0,-1).join('');updKb();}
@@ -387,7 +387,7 @@ function applyFlick(key,dir){
 function showFlickPopup(btn,key,activeDir){
   const popup=document.getElementById('flick-popup');
   const map=FLICK_MAP[key]||{};
-  const spec={c:map.c||'',u:map.u||'',l:map.l||'',r:map.r||'',d:map.d||''};
+  const spec={c:map.c||'',l:map.u||'',l:map.l||'',r:map.r||'',d:map.d||''};
   if(key==='゛゜'){spec.c='゛';spec.u='゜';spec.r='小';spec.l='';spec.d='';}
   ['c','u','l','r','d'].forEach(k=>document.getElementById('fp-'+k).textContent=spec[k]);
   const rect=btn.getBoundingClientRect();
